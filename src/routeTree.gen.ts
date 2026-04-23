@@ -17,6 +17,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResumeIndexRouteImport } from './routes/resume.index'
 import { Route as PersonaIndexRouteImport } from './routes/persona.index'
+import { Route as LessonIndexRouteImport } from './routes/lesson.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 
 const ResumeRoute = ResumeRouteImport.update({
@@ -59,6 +60,11 @@ const PersonaIndexRoute = PersonaIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PersonaRoute,
 } as any)
+const LessonIndexRoute = LessonIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LessonRoute,
+} as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -68,19 +74,20 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/lesson': typeof LessonRoute
+  '/lesson': typeof LessonRouteWithChildren
   '/login': typeof LoginRoute
   '/persona': typeof PersonaRouteWithChildren
   '/resume': typeof ResumeRouteWithChildren
   '/dashboard/': typeof DashboardIndexRoute
+  '/lesson/': typeof LessonIndexRoute
   '/persona/': typeof PersonaIndexRoute
   '/resume/': typeof ResumeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/lesson': typeof LessonRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/lesson': typeof LessonIndexRoute
   '/persona': typeof PersonaIndexRoute
   '/resume': typeof ResumeIndexRoute
 }
@@ -88,11 +95,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/lesson': typeof LessonRoute
+  '/lesson': typeof LessonRouteWithChildren
   '/login': typeof LoginRoute
   '/persona': typeof PersonaRouteWithChildren
   '/resume': typeof ResumeRouteWithChildren
   '/dashboard/': typeof DashboardIndexRoute
+  '/lesson/': typeof LessonIndexRoute
   '/persona/': typeof PersonaIndexRoute
   '/resume/': typeof ResumeIndexRoute
 }
@@ -106,10 +114,11 @@ export interface FileRouteTypes {
     | '/persona'
     | '/resume'
     | '/dashboard/'
+    | '/lesson/'
     | '/persona/'
     | '/resume/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/lesson' | '/login' | '/dashboard' | '/persona' | '/resume'
+  to: '/' | '/login' | '/dashboard' | '/lesson' | '/persona' | '/resume'
   id:
     | '__root__'
     | '/'
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/persona'
     | '/resume'
     | '/dashboard/'
+    | '/lesson/'
     | '/persona/'
     | '/resume/'
   fileRoutesById: FileRoutesById
@@ -126,7 +136,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
-  LessonRoute: typeof LessonRoute
+  LessonRoute: typeof LessonRouteWithChildren
   LoginRoute: typeof LoginRoute
   PersonaRoute: typeof PersonaRouteWithChildren
   ResumeRoute: typeof ResumeRouteWithChildren
@@ -190,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PersonaIndexRouteImport
       parentRoute: typeof PersonaRoute
     }
+    '/lesson/': {
+      id: '/lesson/'
+      path: '/'
+      fullPath: '/lesson/'
+      preLoaderRoute: typeof LessonIndexRouteImport
+      parentRoute: typeof LessonRoute
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
@@ -211,6 +228,17 @@ const DashboardRouteChildren: DashboardRouteChildren = {
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
 )
+
+interface LessonRouteChildren {
+  LessonIndexRoute: typeof LessonIndexRoute
+}
+
+const LessonRouteChildren: LessonRouteChildren = {
+  LessonIndexRoute: LessonIndexRoute,
+}
+
+const LessonRouteWithChildren =
+  LessonRoute._addFileChildren(LessonRouteChildren)
 
 interface PersonaRouteChildren {
   PersonaIndexRoute: typeof PersonaIndexRoute
@@ -237,7 +265,7 @@ const ResumeRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
-  LessonRoute: LessonRoute,
+  LessonRoute: LessonRouteWithChildren,
   LoginRoute: LoginRoute,
   PersonaRoute: PersonaRouteWithChildren,
   ResumeRoute: ResumeRouteWithChildren,
@@ -245,3 +273,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
