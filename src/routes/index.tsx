@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Target, BarChart3, Users, FileText, Brain, TrendingUp } from "lucide-react";
+import bellcurveLogo from "../../images/ChatGPT Image Apr 22, 2026, 10_06_00 PM.JPEG";
 
 export const Route = createFileRoute("/")({ component: Landing });
 
@@ -26,9 +27,7 @@ function Header() {
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-gradient-primary text-primary-foreground">
-            <span className="font-display text-lg font-bold">B</span>
-          </div>
+          <img src={bellcurveLogo} alt="Bellcurve logo" className="h-8 w-8 rounded-md object-cover" />
           <span className="font-display text-xl font-semibold tracking-tight">Bellcurve</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
@@ -265,9 +264,7 @@ function Footer() {
     <footer className="border-t border-border py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:flex-row">
         <div className="flex items-center gap-2">
-          <div className="grid h-6 w-6 place-items-center rounded bg-gradient-primary text-primary-foreground">
-            <span className="font-display text-xs font-bold">B</span>
-          </div>
+          <img src={bellcurveLogo} alt="Bellcurve logo" className="h-6 w-6 rounded object-cover" />
           <span>© {new Date().getFullYear()} Bellcurve</span>
         </div>
         <div className="flex gap-6">

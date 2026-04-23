@@ -1,5 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
+import bellcurveLogo from "../../images/ChatGPT Image Apr 22, 2026, 10_06_00 PM.JPEG";
 
 function NotFoundComponent() {
   return (
@@ -36,6 +37,8 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/jpeg", href: bellcurveLogo },
+      { rel: "apple-touch-icon", href: bellcurveLogo },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" },

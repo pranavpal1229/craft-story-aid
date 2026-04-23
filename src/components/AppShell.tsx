@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
 import { LayoutDashboard, User, FileText, GraduationCap, LogOut } from "lucide-react";
+import bellcurveLogo from "../../images/ChatGPT Image Apr 22, 2026, 10_06_00 PM.JPEG";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -15,9 +16,7 @@ export function AppShell() {
       <aside className="hidden border-r border-border bg-card md:block">
         <div className="flex h-full flex-col">
           <Link to="/dashboard" className="flex items-center gap-2 border-b border-border p-6">
-            <div className="grid h-8 w-8 place-items-center rounded-md bg-gradient-primary text-primary-foreground">
-              <span className="font-display text-lg font-bold">B</span>
-            </div>
+            <img src={bellcurveLogo} alt="Bellcurve logo" className="h-8 w-8 rounded-md object-cover" />
             <span className="font-display text-xl font-semibold">Bellcurve</span>
           </Link>
           <nav className="flex-1 space-y-1 p-3">
