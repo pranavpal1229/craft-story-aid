@@ -9,38 +9,166 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as PersonaRouteImport } from './routes/persona'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as LessonRouteImport } from './routes/lesson'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResumeIndexRouteImport } from './routes/resume.index'
+import { Route as PersonaIndexRouteImport } from './routes/persona.index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonaRoute = PersonaRouteImport.update({
+  id: '/persona',
+  path: '/persona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LessonRoute = LessonRouteImport.update({
+  id: '/lesson',
+  path: '/lesson',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResumeIndexRoute = ResumeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResumeRoute,
+} as any)
+const PersonaIndexRoute = PersonaIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PersonaRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/lesson': typeof LessonRoute
+  '/login': typeof LoginRoute
+  '/persona': typeof PersonaRouteWithChildren
+  '/resume': typeof ResumeRouteWithChildren
+  '/dashboard/': typeof DashboardIndexRoute
+  '/persona/': typeof PersonaIndexRoute
+  '/resume/': typeof ResumeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/lesson': typeof LessonRoute
+  '/login': typeof LoginRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/persona': typeof PersonaIndexRoute
+  '/resume': typeof ResumeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/lesson': typeof LessonRoute
+  '/login': typeof LoginRoute
+  '/persona': typeof PersonaRouteWithChildren
+  '/resume': typeof ResumeRouteWithChildren
+  '/dashboard/': typeof DashboardIndexRoute
+  '/persona/': typeof PersonaIndexRoute
+  '/resume/': typeof ResumeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/lesson'
+    | '/login'
+    | '/persona'
+    | '/resume'
+    | '/dashboard/'
+    | '/persona/'
+    | '/resume/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/lesson' | '/login' | '/dashboard' | '/persona' | '/resume'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/lesson'
+    | '/login'
+    | '/persona'
+    | '/resume'
+    | '/dashboard/'
+    | '/persona/'
+    | '/resume/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  LessonRoute: typeof LessonRoute
+  LoginRoute: typeof LoginRoute
+  PersonaRoute: typeof PersonaRouteWithChildren
+  ResumeRoute: typeof ResumeRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/persona': {
+      id: '/persona'
+      path: '/persona'
+      fullPath: '/persona'
+      preLoaderRoute: typeof PersonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lesson': {
+      id: '/lesson'
+      path: '/lesson'
+      fullPath: '/lesson'
+      preLoaderRoute: typeof LessonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +176,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resume/': {
+      id: '/resume/'
+      path: '/'
+      fullPath: '/resume/'
+      preLoaderRoute: typeof ResumeIndexRouteImport
+      parentRoute: typeof ResumeRoute
+    }
+    '/persona/': {
+      id: '/persona/'
+      path: '/'
+      fullPath: '/persona/'
+      preLoaderRoute: typeof PersonaIndexRouteImport
+      parentRoute: typeof PersonaRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface PersonaRouteChildren {
+  PersonaIndexRoute: typeof PersonaIndexRoute
+}
+
+const PersonaRouteChildren: PersonaRouteChildren = {
+  PersonaIndexRoute: PersonaIndexRoute,
+}
+
+const PersonaRouteWithChildren =
+  PersonaRoute._addFileChildren(PersonaRouteChildren)
+
+interface ResumeRouteChildren {
+  ResumeIndexRoute: typeof ResumeIndexRoute
+}
+
+const ResumeRouteChildren: ResumeRouteChildren = {
+  ResumeIndexRoute: ResumeIndexRoute,
+}
+
+const ResumeRouteWithChildren =
+  ResumeRoute._addFileChildren(ResumeRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  LessonRoute: LessonRoute,
+  LoginRoute: LoginRoute,
+  PersonaRoute: PersonaRouteWithChildren,
+  ResumeRoute: ResumeRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

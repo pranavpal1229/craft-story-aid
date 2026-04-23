@@ -2,16 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, User, FileText, GraduationCap, TrendingUp } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/")({
-  component: DashboardHome,
+  component: DashboardHomeView,
 });
 
 const STEPS = [
-  { to: "/persona", icon: User, title: "Learn about Applicant", desc: "Build your recruiting persona through guided AI questions.", cta: "Begin profile", status: "Start here" },
-  { to: "/resume", icon: FileText, title: "Resume Builder", desc: "Upload your resume — we tailor it to your persona and target firms.", cta: "Upload resume", status: "Step 2" },
-  { to: "/lesson", icon: GraduationCap, title: "Interactive Lessons", desc: "Pre-quiz, deep interactive lesson, then post-quiz to measure growth.", cta: "Start DCF lesson", status: "Step 3" },
+  { to: "/persona" as const, icon: User, title: "Learn about Applicant", desc: "Build your recruiting persona through guided AI questions.", cta: "Begin profile", status: "Start here" },
+  { to: "/resume" as const, icon: FileText, title: "Resume Builder", desc: "Upload your resume — we tailor it to your persona and target firms.", cta: "Upload resume", status: "Step 2" },
+  { to: "/lesson" as const, icon: GraduationCap, title: "Interactive Lessons", desc: "Pre-quiz, deep interactive lesson, then post-quiz to measure growth.", cta: "Start DCF lesson", status: "Step 3" },
 ];
 
-export default function DashboardHome() {}
 function DashboardHomeView() {
   return (
     <div className="mx-auto max-w-6xl px-8 py-12">
@@ -84,6 +83,3 @@ function DashboardHomeView() {
     </div>
   );
 }
-
-// re-export real component
-Route.options.component = DashboardHomeView;
